@@ -5,6 +5,6 @@ import com.hcc.crest.api.Api;
 public class AController implements Api {
     @Override
     public void doAc() {
-
+        System.out.println();
     }
 }
