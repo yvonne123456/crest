@@ -4,24 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.2</version>
+        <relativePath/>
+    </parent>
+
     <groupId>com.hcc</groupId>
     <artifactId>crest</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-release</version>
+
     <modules>
         <module>crest-api</module>
         <module>crest-service</module>
     </modules>
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <lombok-version>1.18.16</lombok-version>
         <mybatis-plus-version>3.3.0</mybatis-plus-version>
-        <spring-boot-starter-version>2.4.2</spring-boot-starter-version>
+<!--        <spring-boot-starter-version>2.4.2</spring-boot-starter-version>-->
         <mysql-connector-java-version>5.1.47</mysql-connector-java-version>
         <spring-boot-starter-test-version>2.4.1</spring-boot-starter-test-version>
-        <spring-boot-starter-web-version>2.3.8.RELEASE</spring-boot-starter-web-version>
+<!--        <spring-boot-starter-web-version>2.3.8.RELEASE</spring-boot-starter-web-version>-->
     </properties>
 
     <dependencyManagement>
@@ -45,18 +54,17 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok-version}</version>
-                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>${spring-boot-starter-version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter</artifactId>-->
+<!--&lt;!&ndash;            <version>${spring-boot-starter-version}</version>&ndash;&gt;-->
+<!--        </dependency>-->
 
 
         <!-- mysql驱动 -->
@@ -70,16 +78,28 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot-starter-web-version}</version>
+<!--            <version>${spring-boot-starter-web-version}</version>-->
         </dependency>
 
     </dependencies>
+
+
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.hcc.crest.CRestApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
