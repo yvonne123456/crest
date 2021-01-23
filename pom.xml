@@ -27,10 +27,8 @@
         <maven.compiler.target>8</maven.compiler.target>
         <lombok-version>1.18.16</lombok-version>
         <mybatis-plus-version>3.3.0</mybatis-plus-version>
-<!--        <spring-boot-starter-version>2.4.2</spring-boot-starter-version>-->
         <mysql-connector-java-version>5.1.47</mysql-connector-java-version>
         <spring-boot-starter-test-version>2.4.1</spring-boot-starter-test-version>
-<!--        <spring-boot-starter-web-version>2.3.8.RELEASE</spring-boot-starter-web-version>-->
     </properties>
 
     <dependencyManagement>
@@ -58,14 +56,9 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter</artifactId>-->
-<!--&lt;!&ndash;            <version>${spring-boot-starter-version}</version>&ndash;&gt;-->
-<!--        </dependency>-->
 
+
+    <dependencies>
 
         <!-- mysql驱动 -->
         <dependency>
@@ -85,23 +78,6 @@
 
 
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.hcc.crest.CRestApplication</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+
 
 </project>

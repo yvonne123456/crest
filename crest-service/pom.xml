@@ -11,12 +11,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>crest-service</artifactId>
 
+
     <dependencies>
 
         <dependency>
             <groupId>com.hcc</groupId>
             <artifactId>crest-api</artifactId>
             <version>1.0-release</version>
+<!--            <scope>system</scope>-->
+<!--            <systemPath>C:/Users/admin/.m2/repository/com/hcc/crest-api/1.0-release/crest-api-1.0-release.jar</systemPath>-->
         </dependency>
 
         <dependency>
@@ -41,5 +44,82 @@
         </dependency>
     </dependencies>
 
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.hcc.crest.CRestApplication</mainClass>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+                <!--no main manifest attribute, in /app.jar
+                    项目基于maven pom多模块的开发的，需要设置goal-repackage属性为true，
+                    否则打包后文件依赖文件没有一起打包，然后镜像内没有可以运行的程序文件
+                 -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <!--指定生成的镜像名 前缀加项目artifactId坐标 -->
+                    <imageName>pf/${project.artifactId}</imageName>
+                    <!--指定标签-->
+                    <imageTags>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+
+                    <!-- 基础镜像jdk 1.8-->
+                    <baseImage>java</baseImage>
+                    <!-- 制作者提供本人信息 -->
+                    <maintainer>pengfeng</maintainer>
+
+                    <!--切换到/ROOT目录 -->
+                    <workdir>/ROOT</workdir>
+                    <!--                    <cmd>["java", "-version"]</cmd>-->
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
+                    <!-- 指定 Dockerfile 路径 ${project.basedir}：项目根路径下，这是第二种方式需要配置的-->
+                    <!--   <dockerDirectory>${project.basedir}</dockerDirectory>-->
+                    <!--指定远程 docker api地址-->
+                    <dockerHost>http://115.159.206.67:2375</dockerHost>
+                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/ROOT</targetPath>
+                            <!--用于指定需要复制的根目录，${project.build.directory}表示target目 录-->
+                            <directory>${project.build.directory}</directory>
+                            <!--用于指定需要复制的文件。${project.build.finalName}.jar指的是打包 后的jar包文件。-->
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                    <!-- 以下两行是为了docker push到DockerHub使用的。-->
+                    <!--                    <serverId>docker-hub</serverId>
+                                        <registryUrl>https://index.docker.io/v1</registryUrl>-->
+                </configuration>
+                <!--maven package 自动构建镜像到服务器 -->
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
